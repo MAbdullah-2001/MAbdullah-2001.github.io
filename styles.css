@@ -1,0 +1,1358 @@
+:root {
+  --primary-blue: #4A90E2;
+  --secondary-blue: #5A9BD4;
+  --tactical-orange: #DC143C;
+  --hud-green: #00ff88;
+  --dark-navy: #1A1A1A;
+  --dark-blue: #2C3E50;
+  --accent-gold: #D4AF37;
+  --text-color: #e6e6e6;
+  --explosion-color: #DC143C;
+  --military-green: #5A6B3F;
+  --storm-gray: #708090;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--text-color);
+  background: transparent;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure all containers are properly sized */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Background */
+.tactical-bg {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: url("https://github.com/MAbdullah-2001/assets/raw/1c50f6c424612fc6e1286535e491831a5a83e4ca/resized_2560x1010.jpg") center center / cover no-repeat !important;
+  z-index: -2 !important;
+}
+
+.tactical-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Particles */
+.tactical-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.fire-spark, .fire-ember, .fire-ash {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.fire-spark {
+  width: 2px;
+  height: 4px;
+  background: linear-gradient(180deg, #cc3300, #ff6600, transparent);
+  box-shadow: 0 0 4px #cc3300;
+}
+
+.fire-ember {
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, #bb2200, #dd4400, #ff7733, transparent);
+  box-shadow: 0 0 6px #bb2200;
+}
+
+.fire-ash {
+  width: 1px;
+  height: 2px;
+  background: linear-gradient(180deg, #aa1100, #cc4422, transparent);
+  box-shadow: 0 0 3px #aa1100;
+}
+
+/* Navigation */
+nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 15px 20px;
+  z-index: 1000;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-family: 'Avenir Next', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(45deg, var(--accent-gold), #fff700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid var(--hud-green);
+  border-radius: 8px;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+}
+
+.login-btn, .logout-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Rajdhani', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, var(--tactical-orange), #ff4757);
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.login-btn:hover, .logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+}
+
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 26, 26, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-content {
+  text-align: center;
+  color: var(--text-color);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(212, 175, 55, 0.3);
+  border-top: 4px solid var(--accent-gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hero Section */
+.hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.hero-content {
+  max-width: 600px;
+  z-index: 10;
+  background: rgba(26, 26, 26, 0.8);
+  padding: 40px;
+  border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hero-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--accent-gold);
+  border-radius: 15px 15px 0 0;
+}
+
+.hero-content h1 {
+  font-family: 'Avenir Next', sans-serif;
+  font-size: 2.5rem;
+  background: linear-gradient(45deg, var(--accent-gold), #fff700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+  text-transform: uppercase;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.hero-content p {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.3rem;
+  color: var(--text-color);
+  margin-bottom: 30px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Force center alignment for all hero content */
+#loginSection .hero-content,
+#successSection .hero-content {
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#loginSection .hero-content > *,
+#successSection .hero-content > * {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Ensure all paragraphs in hero sections are centered */
+.hero-content p {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Ensure headings are centered */
+.hero-content h1,
+.hero-content h2,
+.hero-content h3 {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Login Card */
+.login-card {
+  background: rgba(44, 62, 80, 0.8);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  margin: 20px auto 0 auto;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-card h3 {
+  color: var(--hud-green);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-family: 'Avenir Next', sans-serif;
+  text-align: center;
+}
+
+.login-card p {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.google-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 15px 30px;
+  background: white;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.google-login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.voting-info {
+  margin-top: 25px;
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+  max-width: 400px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1rem;
+  justify-content: flex-start;
+}
+
+.info-item .icon {
+  font-size: 1.5rem;
+  width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Already Voted State Styling */
+.already-voted-card {
+  border-color: var(--hud-green) !important;
+  background: rgba(0, 255, 136, 0.1) !important;
+  text-align: center !important;
+}
+
+.already-voted-card * {
+  text-align: center !important;
+}
+
+.already-voted-info {
+  text-align: center !important;
+  margin: 20px auto !important;
+  max-width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.already-voted-info .info-item {
+  justify-content: center !important;
+  margin-bottom: 15px !important;
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  width: auto !important;
+}
+
+.centered-text {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Voting Sections */
+.voting-section {
+  min-height: 100vh;
+  padding: 40px 20px;
+  position: relative;
+}
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+  background: rgba(26, 26, 26, 0.8);
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+}
+
+.section-header h2 {
+  font-family: 'Avenir Next', sans-serif;
+  font-size: 2.5rem;
+  color: var(--accent-gold);
+  margin-bottom: 15px;
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
+.section-header p {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.vote-counter {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--hud-green);
+  color: #000;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: 'Rajdhani', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+/* Submissions Grid */
+.submissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.submission-card {
+  background: rgba(26, 26, 26, 0.9);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.submission-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-blue);
+  box-shadow: 0 15px 40px rgba(74, 144, 226, 0.4);
+}
+
+.submission-card.selected {
+  border-color: var(--hud-green);
+  box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+  transform: translateY(-5px);
+}
+
+.submission-card.selected::before {
+  content: '✓';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background: var(--hud-green);
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+}
+
+.submission-image {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--dark-blue);
+  position: relative;
+}
+
+.submission-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+}
+
+.submission-info {
+  padding: 20px;
+}
+
+.submission-title {
+  font-family: 'Avenir Next', sans-serif;
+  font-size: 1.3rem;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.submission-author {
+  font-family: 'Titillium Web', sans-serif;
+  color: var(--hud-green);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.submission-id {
+  font-family: 'Rajdhani', sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.next-btn, .back-btn, .submit-btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.next-btn {
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  color: white;
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+}
+
+.back-btn {
+  background: linear-gradient(135deg, var(--storm-gray), var(--dark-blue));
+  color: white;
+  box-shadow: 0 8px 25px rgba(112, 128, 144, 0.4);
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--hud-green), #00cc70);
+  color: #000;
+  box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+  font-weight: 900;
+}
+
+.next-btn:hover, .back-btn:hover, .submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(74, 144, 226, 0.6);
+}
+
+.next-btn:disabled, .submit-btn:disabled {
+  background: rgba(112, 128, 144, 0.5);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Success Section */
+.success-card {
+  background: rgba(44, 62, 80, 0.8);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid var(--hud-green);
+  margin: 20px auto 0 auto;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.success-card h3 {
+  color: var(--hud-green);
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-family: 'Avenir Next', sans-serif;
+  text-align: center;
+}
+
+.votes-summary {
+  background: rgba(26, 26, 26, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  border-left: 4px solid var(--accent-gold);
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.votes-summary h4 {
+  color: var(--accent-gold);
+  margin-bottom: 10px;
+  font-family: 'Avenir Next', sans-serif;
+  text-align: center;
+}
+
+.votes-summary h5 {
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+  font-family: 'Avenir Next', sans-serif;
+  text-align: center;
+}
+
+.votes-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.votes-summary li {
+  padding: 5px 0;
+  color: var(--text-color);
+  font-family: 'Titillium Web', sans-serif;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.votes-summary .vote-category {
+  margin: 15px auto;
+  text-align: center;
+  max-width: 400px;
+}
+
+.thank-you {
+  font-style: italic;
+  color: var(--accent-gold);
+  text-align: center;
+  margin-top: 20px;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: rgba(26, 26, 26, 0.95);
+  margin: auto;
+  padding: 30px;
+  border: 1px solid var(--tactical-orange);
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(220, 20, 60, 0.3);
+}
+
+.modal-content h3 {
+  color: var(--tactical-orange);
+  margin-bottom: 15px;
+  font-family: 'Avenir Next', sans-serif;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close:hover {
+  color: var(--tactical-orange);
+}
+
+.error-btn {
+  padding: 10px 25px;
+  background: var(--tactical-orange);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+.discord-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.discord-button {
+  background-color: #5865F2; /* Discord blurple */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.discord-button:hover {
+  background-color: #4752C4;
+}
+
+.name-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 300px;
+  margin: 20px auto;
+  width: 100%;
+}
+
+/* Name Input Field */
+#nameInput {
+  padding: 15px 20px;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  background: rgba(44, 62, 80, 0.8);
+  color: var(--text-color);
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#nameInput:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: rgba(44, 62, 80, 0.9);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+#nameInput::placeholder {
+  color: rgba(230, 230, 230, 0.6);
+}
+
+/* Name Login Button */
+.name-login-btn {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Rajdhani', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.name-login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+  background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+}
+
+.name-login-btn:active {
+  transform: translateY(0);
+}
+
+/* View Button Styles */
+.view-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  z-index: 10;
+}
+
+.view-button:hover {
+  background: linear-gradient(135deg, #FFA500, #FF8C00);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.view-button:active {
+  transform: translateY(0);
+}
+
+/* Make submission-card position relative for absolute positioning of button */
+.submission-card {
+  position: relative;
+}
+
+/* Image Overlay Styles */
+#imageOverlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  text-align: center;
+}
+
+.overlay-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 10001;
+}
+
+.overlay-close:hover {
+  color: #ff6b35;
+}
+
+#overlayImage {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.overlay-info {
+  margin-top: 20px;
+  color: white;
+}
+
+.overlay-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #ff6b35;
+}
+
+.overlay-author {
+  font-size: 18px;
+  color: #cccccc;
+}
+
+/* Mobile responsiveness for name input */
+@media (max-width: 768px) {
+  .name-input-container {
+    max-width: 280px;
+    gap: 12px;
+    margin: 15px auto;
+  }
+  
+  #nameInput {
+    padding: 12px 18px;
+    font-size: 1rem;
+  }
+  
+  .name-login-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+  
+  .overlay-close {
+    top: -30px;
+    font-size: 30px;
+  }
+  
+  .overlay-title {
+    font-size: 20px;
+  }
+  
+  .overlay-author {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .name-input-container {
+    max-width: 250px;
+    gap: 10px;
+  }
+  
+  #nameInput {
+    padding: 10px 15px;
+    font-size: 0.95rem;
+  }
+  
+  .name-login-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .tactical-bg {
+    background: url("https://github.com/MAbdullah-2001/assets/raw/1c50f6c424612fc6e1286535e491831a5a83e4ca/mobile_resized.jpg") center center / cover no-repeat !important;
+  }
+  
+  .discord-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  .hero {
+    min-height: 70vh;
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .hero-content {
+    padding: 25px 20px;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .hero-content h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .hero-content p {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .login-card {
+    padding: 20px;
+    margin: 15px auto 0 auto;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .login-card h3 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  
+  .login-card p {
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.4;
+  }
+  
+  .google-login-btn {
+    width: 100%;
+    max-width: 280px;
+    margin: 15px auto;
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+  
+  .voting-info {
+    margin-top: 20px;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .info-item {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    justify-content: flex-start;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  .section-header p {
+    text-align: center;
+  }
+  
+  .submissions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .submission-card {
+    margin-bottom: 10px;
+  }
+  
+  .nav-container {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .navigation-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .next-btn, .back-btn, .submit-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .success-card {
+    padding: 20px;
+    margin: 15px auto 0 auto;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .success-card h3 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .votes-summary {
+    margin: 15px auto;
+    padding: 15px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .votes-summary h4 {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  .votes-summary h5 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+  
+  /* Already voted mobile styles for tablets */
+  .already-voted-card {
+    padding: 20px !important;
+    text-align: center !important;
+  }
+  
+  .already-voted-info {
+    text-align: center !important;
+    margin: 20px auto !important;
+  }
+  
+  .already-voted-info .info-item {
+    justify-content: center !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .centered-text {
+    text-align: center !important;
+  }
+}
+
+.submission-card.spray-card .submission-image {
+  width: 100%;
+  height: 350px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Mobile responsiveness for spray cards */
+@media (max-width: 768px) {
+  .submission-card.spray-card .submission-image {
+    height: 320px;
+  }
+}
+
+.name-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 300px;
+  margin: 20px auto;
+  width: 100%;
+}
+
+/* Name Input Field */
+#nameInput {
+  padding: 15px 20px;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  background: rgba(44, 62, 80, 0.8);
+  color: var(--text-color);
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#nameInput:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: rgba(44, 62, 80, 0.9);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+#nameInput::placeholder {
+  color: rgba(230, 230, 230, 0.6);
+}
+
+/* Name Login Button */
+.name-login-btn {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Rajdhani', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.name-login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+  background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+}
+
+.name-login-btn:active {
+  transform: translateY(0);
+}
+
+/* Mobile responsiveness for name input */
+@media (max-width: 768px) {
+  .name-input-container {
+    max-width: 280px;
+    gap: 12px;
+    margin: 15px auto;
+  }
+  
+  #nameInput {
+    padding: 12px 18px;
+    font-size: 1rem;
+  }
+  
+  .name-login-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .name-input-container {
+    max-width: 250px;
+    gap: 10px;
+  }
+  
+  #nameInput {
+    padding: 10px 15px;
+    font-size: 0.95rem;
+  }
+  
+  .name-login-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .submission-card.spray-card .submission-image {
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .section-header h2 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+  
+  .submissions-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .hero-content, .section-header {
+    padding: 20px 15px;
+    text-align: center;
+  }
+  
+  .login-card {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .login-card h3 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  
+  .google-login-btn {
+    width: 100%;
+    max-width: 250px;
+    margin: 15px auto;
+    font-size: 0.95rem;
+  }
+  
+  .voting-info {
+    text-align: left;
+    width: 100%;
+  }
+  
+  .info-item {
+    font-size: 0.9rem;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .success-card {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .votes-summary {
+    padding: 12px;
+    margin: 12px auto;
+  }
+  
+  .votes-summary h4 {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  
+  .votes-summary h5 {
+    font-size: 1rem;
+  }
+  
+  /* Already voted mobile styles */
+  .already-voted-card {
+    padding: 15px !important;
+    text-align: center !important;
+  }
+  
+  .already-voted-info {
+    text-align: center !important;
+    margin: 15px auto !important;
+  }
+  
+  .already-voted-info .info-item {
+    justify-content: center !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .centered-text {
+    text-align: center !important;
+    font-size: 0.95rem !important;
+  }
+}

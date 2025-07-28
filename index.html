@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arena Breakout - Community Voting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Avenir+Next:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="tactical-bg"></div>
+  <div class="tactical-particles" id="particles"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">Arena Breakout Voting</div>
+      <div class="nav-right">
+        <div id="userInfo" class="user-info" style="display: none;">
+          <span id="userEmail"></span>
+          <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+        <button id="loginBtn" class="login-btn" style="display: none;">Enter Name</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Loading Screen -->
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <p>Loading voting system...</p>
+    </div>
+  </div>
+
+  <!-- Login Section -->
+  <section id="loginSection" class="hero">
+    <div class="hero-content">
+      <h1>Community Voting Event</h1>
+      <p>Vote for your favorite weapon designs and spray artwork submissions from our talented community!</p>
+      <div class="login-card">
+        <h3>🗳️ Ready to Vote?</h3>
+        <p>Enter your name to participate in the community voting event</p>
+        <div class="name-input-container">
+          <input type="text" id="nameInput" placeholder="Enter your name" maxlength="50" />
+          <button id="nameLoginBtn" class="name-login-btn">Continue</button>
+        </div>
+        <div class="voting-info">
+          <div class="info-item">
+            <span class="icon">🎨</span>
+            <span>Vote for up to 3 submissions per category</span>
+          </div>
+          <div class="info-item">
+            <span class="icon">⚔️</span>
+            <span>Two categories: Weapon Designs & Spray Artwork</span>
+          </div>
+          <div class="info-item">
+            <span class="icon">🏆</span>
+            <span>Help choose the community favorites!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Weapons Category -->
+  <section id="weaponsSection" class="voting-section" style="display: none;">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>⚔️ Weapon Designs</h2>
+        <p>Select up to 3 weapon design submissions that you like the most</p>
+        <div class="vote-counter">
+          <span id="weaponVoteCount">0</span> / 3 votes selected
+        </div>
+      </div>
+      <div id="weaponsGrid" class="submissions-grid">
+        <!-- Weapon submissions will be loaded here -->
+      </div>
+      <div class="navigation-buttons">
+        <button id="nextToSprays" class="next-btn" disabled>
+          Next: Spray Designs →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sprays Category -->
+  <section id="spraysSection" class="voting-section" style="display: none;">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>🎨 Spray Artwork</h2>
+        <p>Select up to 3 spray artwork submissions that you like the most</p>
+        <div class="vote-counter">
+          <span id="sprayVoteCount">0</span> / 3 votes selected
+        </div>
+      </div>
+      <div id="spraysGrid" class="submissions-grid">
+        <!-- Spray submissions will be loaded here -->
+      </div>
+      <div class="navigation-buttons">
+        <button id="backToWeapons" class="back-btn">← Back to Weapons</button>
+        <button id="submitVotes" class="submit-btn" disabled>
+          Submit All Votes 🗳️
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Section -->
+  <section id="successSection" class="hero" style="display: none;">
+  <div class="hero-content">
+    <h1>🎉 Votes Submitted!</h1>
+    <p>Thank you for participating in the Arena Breakout community voting event!</p>
+    <div class="success-card">
+      <h3>Your votes have been recorded</h3>
+      <div id="votesSummary" class="votes-summary">
+        <!-- Vote summary will be displayed here -->
+      </div>
+      <p class="thank-you">Your participation helps shape our community's favorites. Results will be announced on Discord server!</p>
+      <div class="discord-button-container">
+        <a href="https://discord.gg/arenabreakout" target="_blank" rel="noopener noreferrer">
+          <button class="discord-button">Join Discord Server</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Error Modal -->
+  <div id="errorModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>⚠️ Error</h3>
+      <p id="errorMessage"></p>
+      <button id="errorOk" class="error-btn">OK</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
